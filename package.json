@@ -2,9 +2,9 @@
   "name": "aina",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,8 +15,10 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsdom": "^24.0.0",
+    "nodemon": "^3.1.0",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
+    "rss-parser": "^3.13.0",
     "sequelize": "^6.37.3",
     "striptags": "^3.2.0",
     "xml2js": "^0.6.2"
