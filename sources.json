@@ -1,0 +1,37 @@
+[
+    {
+      "source": "NDTV",
+      "url": "https://feeds.feedburner.com/ndtvnews-top-stories"
+    },
+    {
+      "source": "Google-feeds",
+      "url": "https://www.deccanchronicle.com/google_feeds.xml"
+    },
+    {
+      "source": "BBC",
+      "url": "https://feeds.bbci.co.uk/news/world/asia/india/rss.xml"
+    },
+
+    {
+      "source": "BBC",
+      "url": "https://www.indiatvnews.com/rssnews/topstory.xml"
+    },
+
+    {
+      "source": "BBC",
+      "url": "https://www.dnaindia.com/feeds/india.xml"
+    },
+    {
+      "source": "BBC",
+      "url": "https://www.news18.com/commonfeeds/v1/eng/rss/india.xml"
+    },
+    {
+      "source": "BBC",
+      "url": "https://feeds.feedburner.com/ndtvnews-latest"
+
+    }
+
+
+
+
+  ]

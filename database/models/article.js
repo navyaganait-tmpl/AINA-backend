@@ -34,7 +34,9 @@ module.exports = (sequelize, DataTypes) => {
         originalArticle: {
             type: DataTypes.JSON,
             allowNull: true
-        }
+        },
+        
+
 
 
     })
