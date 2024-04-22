@@ -4,7 +4,7 @@ module.exports=(sequelize,DataTypes)=>{
         categoryId:{
             primaryKey:true,
             type:DataTypes.INTEGER,
-            auto_increment:true
+            autoIncrement:true
         },
         title:{
             type:DataTypes.TEXT,

@@ -3,16 +3,21 @@ module.exports=(sequelize,DataTypes)=>{
     const article =sequelize.define("article",{
         articleId:{
             primaryKey:true,
+            autoIncrement:true,
             type:DataTypes.INTEGER,
-            auto_increment:true
+            
+        },
+        relationId:{
+            type:DataTypes.INTEGER,
+            allowNull: true,
         },
         orginalDesc:{
             type:DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         generatedSummary:{
             type:DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         image:{
             type:DataTypes.TEXT,
@@ -30,9 +35,7 @@ module.exports=(sequelize,DataTypes)=>{
         
     })
     article.associate = function (models) {
-        models.article.hasMany(models.article, { foreignKey: "articleId" });
-        models.article.belongsTo(models.article, { foreignKey: "articleId" });
-        models.article.belongsTo(models.category, { foreignKey: "categoryId" });
+         models.article.belongsTo(models.category, { foreignKey: "categoryId" });
       };
     return article;
 

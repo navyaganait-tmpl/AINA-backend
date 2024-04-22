@@ -3,6 +3,7 @@ const axios = require('axios');
 const { parseString } = require('xml2js');
 const striptags = require('striptags');
 const { JSDOM } = require('jsdom');
+const fs = require('fs'); // For saving to a file
 
 module.exports = {
   getAllBlogs: async (req, res) => {
@@ -21,6 +22,7 @@ module.exports = {
           const xmlData = response.data;
           const jsonData = await parseXml(xmlData);
           const items = jsonData.rss.channel[0].item;
+
           const parsedArticles = await Promise.all(items.map(async (item) => {
             let imageUrl = null;
             if (item.enclosure && item.enclosure[0].$.type === 'image/jpeg') {
@@ -30,16 +32,13 @@ module.exports = {
             } else if (item['media:thumbnail']) {
               imageUrl = item['media:thumbnail'][0].$.url;
             }
+
             let content = null;
             if (url === "https://feeds.bbci.co.uk/news/world/asia/india/rss.xml") {
               try {
                 const linkResponse = await axios.get(item.link[0]);
-                // console.log(linkResponse.data);
                 const dom = new JSDOM(linkResponse.data);
-                // console.log(dom);
                 const section = dom.window.document.querySelector('section[data-component="text-block"]');
-
-                console.log(section);
                 content = section ? section.innerHTML : '';
               } catch (error) {
                 console.error(`Error fetching content from ${item.link[0]}:`, error);
@@ -47,19 +46,30 @@ module.exports = {
             } else {
               content = item["content:encoded"] ? striptags(item["content:encoded"][0]) : striptags(item.link[0]);
             }
+
             return {
               link: item.link[0],
               content,
               imageUrl,
             };
           }));
+
           articles.push(...parsedArticles);
         } catch (error) {
           console.error(`Error fetching articles from ${url}:`, error);
         }
       }
 
-      // console.log("Fetched articles:", articles);
+      // Save articles to file
+      const jsonString = JSON.stringify(articles, null, 2); 
+      fs.writeFile('articles.txt', jsonString, (err) => {
+        if (err) {
+          console.error('Error saving articles to file:', err);
+        } else {
+          console.log('Articles saved to articles.txt');
+        }
+      });
+
       return res.status(200).json({ articles });
     } catch (error) {
       console.error('Error fetching articles:', error);

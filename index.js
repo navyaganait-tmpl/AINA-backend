@@ -1,23 +1,17 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+async function saveFirstArticle() {
+  try {
+      const data = fs.readFileSync('articles.txt', 'utf8');
+      const articleData = JSON.parse(data);
 
-const url = 'https://www.bbc.com/news/world-asia-india-68816285';
+      const article = {
+          originalUrl: articleData[0].link,
+          orginalDesc: articleData[0].content,
+          image: articleData[0].imageUrl
+      };
 
-axios.get(url)
-    .then(response => {
-        const $ = cheerio.load(response.data);
-
-        // Find the paywall div
-        const paywallDiv = $('div#paywallbox');
-
-        // Use either sibling or general traversal based on your HTML structure
-        paywallDiv.nextAll('p').remove();   // For direct siblings 
-        // Or 
-        paywallDiv.parent().find('p').remove();  // For nested <p> tags
-
-        // At this point, <p> tags after the paywallbox are removed
-
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
+      await db.article.create(article);
+      console.log('First article saved successfully');
+  } catch (error) {
+      console.error('Error saving article:', error);
+  }
+}
